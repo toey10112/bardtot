@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #007bff;
+        }
+        .navbar a {
+            color: white;
+        }
+        .navbar a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        /* Add the following styles */
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+        .table-striped thead {
+            background-color: #007bff;
+            color: white;
+        }
+        .table-striped th,
+        .table-striped td {
+            border: 1px solid rgba(0, 123, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+{% if not no_navbar %}
+    <nav class="navbar navbar-expand-md">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Bradtot</a>
+            <div class="navbar-nav">
+
+                <a class="nav-item nav-link" href="{% url 'add_key' %}">Add Key</a>
+                <a class="nav-item nav-link" href="{% url 'make_order' %}">Create order</a>
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+
+            </div>
+        </div>
+    </nav>
+{% endif %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

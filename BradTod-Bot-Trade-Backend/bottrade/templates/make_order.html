@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Make Order{% endblock %}
+
+{% block content %}
+    <h2>Make Order</h2>
+    <form method="post" action="{% url 'make_order' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="strategy">Strategy:</label>
+            <select class="form-control" name="strategy" required>
+                <option value="MACD">MACD</option>
+                <option value="EMA">EMA</option>
+                <option value="BOLLINGERBANDS">BOLLINGERBANDS</option>
+                <option value="KELTNER">KELTNER</option>
+
+            </select>
+        </div>
+{#        <div class="form-group">#}
+{#            <label for="amount">Trade Amount:</label>#}
+{#            <input type="number" class="form-control" name="amount" step="0.0001" required>#}
+{#        </div>#}
+        <div class="form-group">
+            <label for="coin">Coin:</label>
+            <select class="form-control" name="coin" required>
+                <option value="BTCUSDT">BTCUSDT</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

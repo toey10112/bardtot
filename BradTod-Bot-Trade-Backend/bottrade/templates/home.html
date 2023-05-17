@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Home Page{% endblock %}
+
+{% block extra_css %}
+<style>
+  .table-responsive {
+    max-width: 100%; /* ตั้งค่าความกว้างสูงสุดของตาราง */
+  }
+  .table {
+    table-layout: fixed; /* ให้ตารางมีขนาดคงที่ */
+    word-wrap: break-word; /* คำที่ยาวเกินไปจะขึ้นบรรทัดใหม่ */
+  }
+  .table th, .table td {
+    width: auto; /* ตั้งค่าความกว้างของแต่ละคอลัมน์ */
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Bradtot</h1>
+    <p>You are logged in as {{ user_email }}</p>
+
+    <h2>Binance Futures Portfolio: {{ usdt_balance|floatformat:2 }} USDT</h2>
+    {% if strategy_used %}
+        <h2>Strategy used: {{ strategy_used }} </h2>
+        <form method="post" action="{% url 'stop_strategy' %}">
+          {% csrf_token %}
+          <input type="hidden" name="strategy" value="{{ strategy_used }}">
+          <button type="submit" class="btn btn-primary">Stop Strategy</button>
+        </form>
+    {% endif %}
+
+
+
+
+    <h2>Open Positions</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Position Amount</th>
+                    <th>Entry Price</th>
+                    <th>Mark Price</th>
+                    <th>Unrealized PnL</th>
+                    <th>Liquidation Price</th>
+                    <th>Leverage</th>
+                    <th>Margin Type</th>
+                    <th>Position Side</th>
+                    <th>Notional</th>
+                    <th>Update Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for position in open_positions %}
+                <tr>
+                    <td>{{ position.symbol }}</td>
+                    <td>{{ position.positionAmt }}</td>
+                    <td>{{ position.entryPrice }}</td>
+                    <td>{{ position.markPrice }}</td>
+                    <td>{{ position.unRealizedProfit }}</td>
+                    <td>{{ position.liquidationPrice }}</td>
+                    <td>{{ position.leverage }}</td>
+                    <td>{{ position.marginType }}</td>
+                    <td>{% if position.positionAmt == 0 %}
+                        None
+                    {% elif position.positionAmt > 0 %}
+                        Buy
+                    {% else %}
+                        Sell
+                    {% endif %}</td>
+                    <td>{{ position.notional }}</td>
+                    <td>{{ position.updateTime }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

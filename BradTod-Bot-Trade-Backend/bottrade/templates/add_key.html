@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Key{% endblock %}
+
+{% block content %}
+    <h2>Add binance secret</h2>
+    <form method="post" action="{% url 'add_key' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="api_key">API Key:</label>
+            <input type="text" class="form-control" name="api_key" required>
+        </div>
+        <div class="form-group">
+            <label for="secret_key">Secret Key:</label>
+            <input type="text" class="form-control" name="secret_key" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
